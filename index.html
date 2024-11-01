@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <h1 id="title"> Home Energy Platform </h1>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="script.js"></script>
+    <script src="server.mjs"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+<body>
+    <title>Temperature Graph</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <div class="loadsheddingSonoffContainer">
+        <div class="leftColumn">
+            <div class="boxLsSonoff">
+                <h2>Sonoff State</h2>
+                <h3><b id="sonoffCurrent"> </b></h3>
+            </div>
+            <div class="boxLsSonoff">                
+                <h2>Battery Percentage</h2>
+                <h3><b id="currentBatt"> </b>%</h3>
+            </div>
+        </div>
+        <div class="boxLsSonoff fullHeight">
+            <h2 class="loadshedding">Loadshedding</h2>
+            <p><b>Current stage:</b> <span  id="stage"> </span></p>
+            <p id="loadsheddingCurrent" > </p> 
+        </div>
+    </div>
+<div class="subHeading">
+    <h2> Power Graphs </h2>
+    <h3> Inverter Data for 7 Days </h2>
+    <di>
+        <button id="left" onclick="changeDay(1)"> &#8592; Previous Day</button>
+        <span id="currentDayDisplay"> </span>
+        <button id="right" onclick="changeDay(-1)"> Next Day &#8594;</button></br>
+    </div>
+</div>
+    <div class="chartContainer"> 
+        <canvas id="ctxBattEn"  ></canvas>  
+        <canvas id="ctxPower"  ></canvas>  
+        <canvas id="ctxPV"  ></canvas> 
+    </div>
+    <h2> Weather Graphs </h2>
+    <div id="description" > </div> 
+    <div class="chartContainer"> 
+        <canvas id="tempChart1"  ></canvas>  
+        <canvas id="tempChart2"  ></canvas> 
+        <canvas id="tempChart3"  ></canvas>  
+    </div>  
+</body>
+</html>

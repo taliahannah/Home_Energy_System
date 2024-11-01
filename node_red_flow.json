@@ -1,0 +1,1624 @@
+[
+    {
+        "id": "47b145e42d0b71fd",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "4df90e7912675cd5",
+        "type": "http request",
+        "z": "47b145e42d0b71fd",
+        "name": "loadshedding area info",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "body",
+        "url": "https://developer.sepush.co.za/business/2.0/area?id=capetown-5-claremont(5)&region=City of Cape Town&events=current&token=YOUR_API_TOKEN",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [
+            {
+                "keyType": "other",
+                "keyValue": "token",
+                "valueType": "other",
+                "valueValue": "YOUR_API_TOKEN"
+            }
+        ],
+        "x": 1080,
+        "y": 500,
+        "wires": [
+            [
+                "a699754dba025017",
+                "e9199131da258c39"
+            ]
+        ]
+    },
+    {
+        "id": "a699754dba025017",
+        "type": "file",
+        "z": "47b145e42d0b71fd",
+        "name": "ls area ",
+        "filename": "/home/pi/Documents/Home_Energy_System/data_skripsie_nodered/loadshedding_area.json",
+        "filenameType": "str",
+        "appendNewline": true,
+        "createDir": false,
+        "overwriteFile": "true",
+        "encoding": "none",
+        "x": 1290,
+        "y": 500,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "e9199131da258c39",
+        "type": "debug",
+        "z": "47b145e42d0b71fd",
+        "name": "ls area",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1290,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "235fe537de93b140",
+        "type": "http request",
+        "z": "47b145e42d0b71fd",
+        "name": "loadshedding status",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "body",
+        "url": "https://developer.sepush.co.za/business/2.0/status?&token=YOUR_API_TOKEN",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [
+            {
+                "keyType": "other",
+                "keyValue": "token",
+                "valueType": "other",
+                "valueValue": "YOUR_API_TOKEN"
+            }
+        ],
+        "x": 1080,
+        "y": 600,
+        "wires": [
+            [
+                "35d46be941360ba4",
+                "c294e942033595d8"
+            ]
+        ]
+    },
+    {
+        "id": "35d46be941360ba4",
+        "type": "file",
+        "z": "47b145e42d0b71fd",
+        "name": "ls status",
+        "filename": "/home/pi/Documents/Home_Energy_System/data_skripsie_nodered/loadshedding_status.json",
+        "filenameType": "str",
+        "appendNewline": true,
+        "createDir": false,
+        "overwriteFile": "true",
+        "encoding": "none",
+        "x": 1300,
+        "y": 600,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "c294e942033595d8",
+        "type": "debug",
+        "z": "47b145e42d0b71fd",
+        "name": "ls status",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1300,
+        "y": 640,
+        "wires": []
+    },
+    {
+        "id": "750f475b253885eb",
+        "type": "inject",
+        "z": "47b145e42d0b71fd",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "1800",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "0.1",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 870,
+        "y": 600,
+        "wires": [
+            [
+                "235fe537de93b140"
+            ]
+        ]
+    },
+    {
+        "id": "f9d04043029332a8",
+        "type": "inject",
+        "z": "47b145e42d0b71fd",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "01 00 * * *",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 870,
+        "y": 500,
+        "wires": [
+            [
+                "4df90e7912675cd5"
+            ]
+        ]
+    },
+    {
+        "id": "1874dbea0a34b433",
+        "type": "exec",
+        "z": "47b145e42d0b71fd",
+        "command": "node /home/pi/Documents/Home_Energy_System/inverter_data.js",
+        "addpay": "",
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "Get Inverter Data",
+        "x": 430,
+        "y": 140,
+        "wires": [
+            [
+                "c914763f88da2dbc"
+            ],
+            [
+                "f57daeb2b209a432"
+            ],
+            [
+                "1ac7c172bf1c0966"
+            ]
+        ]
+    },
+    {
+        "id": "1b0dd18183df4d5d",
+        "type": "inject",
+        "z": "47b145e42d0b71fd",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "01 00 * * *",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 230,
+        "y": 140,
+        "wires": [
+            [
+                "1874dbea0a34b433"
+            ]
+        ]
+    },
+    {
+        "id": "c914763f88da2dbc",
+        "type": "debug",
+        "z": "47b145e42d0b71fd",
+        "name": "stdout inv",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 620,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "f57daeb2b209a432",
+        "type": "debug",
+        "z": "47b145e42d0b71fd",
+        "name": "stderr inv",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 620,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "1ac7c172bf1c0966",
+        "type": "debug",
+        "z": "47b145e42d0b71fd",
+        "name": "code inv",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 620,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "81ae87e7a747f9d8",
+        "type": "exec",
+        "z": "47b145e42d0b71fd",
+        "command": "node /home/pi/Documents/Home_Energy_System/one_day_inv_data.js",
+        "addpay": "",
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "Inverter Data Today",
+        "x": 430,
+        "y": 540,
+        "wires": [
+            [
+                "89a3f493c4338daa"
+            ],
+            [
+                "1c96d2c94d067348"
+            ],
+            [
+                "5ed370070005a978"
+            ]
+        ]
+    },
+    {
+        "id": "73ac6dc543c3cb51",
+        "type": "inject",
+        "z": "47b145e42d0b71fd",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "600",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "120",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 230,
+        "y": 540,
+        "wires": [
+            [
+                "81ae87e7a747f9d8",
+                "3e5abc224d01a922"
+            ]
+        ]
+    },
+    {
+        "id": "89a3f493c4338daa",
+        "type": "debug",
+        "z": "47b145e42d0b71fd",
+        "name": "stdout today inv",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 640,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "1c96d2c94d067348",
+        "type": "debug",
+        "z": "47b145e42d0b71fd",
+        "name": "stderrr today inv",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 640,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "5ed370070005a978",
+        "type": "debug",
+        "z": "47b145e42d0b71fd",
+        "name": "code today inv",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 640,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "c34b4c06bd6346e0",
+        "type": "exec",
+        "z": "47b145e42d0b71fd",
+        "command": "/usr/local/bin/python3 /home/pi/Documents/Home_Energy_System/analytics_freq.py",
+        "addpay": "payload",
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "py forecasting",
+        "x": 460,
+        "y": 660,
+        "wires": [
+            [
+                "775a4af2dc193611"
+            ],
+            [
+                "2395fa37d8fc9fa1"
+            ],
+            [
+                "19e1263a469da579"
+            ]
+        ]
+    },
+    {
+        "id": "775a4af2dc193611",
+        "type": "debug",
+        "z": "47b145e42d0b71fd",
+        "name": "stdout py",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 660,
+        "y": 620,
+        "wires": []
+    },
+    {
+        "id": "2395fa37d8fc9fa1",
+        "type": "debug",
+        "z": "47b145e42d0b71fd",
+        "name": "stderr py",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 660,
+        "y": 660,
+        "wires": []
+    },
+    {
+        "id": "19e1263a469da579",
+        "type": "debug",
+        "z": "47b145e42d0b71fd",
+        "name": "return py",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 660,
+        "y": 700,
+        "wires": []
+    },
+    {
+        "id": "52fab216e809db5c",
+        "type": "http request",
+        "z": "47b145e42d0b71fd",
+        "name": "get status",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": "body",
+        "url": "http://172.20.10.2/cs?c2=40&c1=cmnd%2Ftasmota%2Fstatus%2011",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 1040,
+        "y": 1260,
+        "wires": [
+            [
+                "c7063bf6b6b03206",
+                "7e9c539132840cb7"
+            ]
+        ]
+    },
+    {
+        "id": "c7063bf6b6b03206",
+        "type": "debug",
+        "z": "47b145e42d0b71fd",
+        "name": "debug request",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1100,
+        "y": 1320,
+        "wires": []
+    },
+    {
+        "id": "fc20917a0b9abd82",
+        "type": "file",
+        "z": "47b145e42d0b71fd",
+        "name": "state file",
+        "filename": "/home/pi/Documents/Home_Energy_System/data_skripsie_nodered/sonoff_node.json",
+        "filenameType": "str",
+        "appendNewline": true,
+        "createDir": false,
+        "overwriteFile": "true",
+        "encoding": "utf8",
+        "x": 1620,
+        "y": 1860,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "aeae3fb18fa55813",
+        "type": "inject",
+        "z": "47b145e42d0b71fd",
+        "d": true,
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "current",
+                "v": "",
+                "vt": "str"
+            }
+        ],
+        "repeat": "5",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 1070,
+        "y": 1300,
+        "wires": [
+            [
+                "52fab216e809db5c"
+            ]
+        ]
+    },
+    {
+        "id": "016e141ed19d5d0a",
+        "type": "debug",
+        "z": "47b145e42d0b71fd",
+        "name": "debug function sonoff",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1720,
+        "y": 1920,
+        "wires": []
+    },
+    {
+        "id": "778b0a65e0b5a343",
+        "type": "function",
+        "z": "47b145e42d0b71fd",
+        "name": "switch function",
+        "func": "let current = msg.payload\nlet previousState = context.get('previousState') || null;\n\nlet lines = current.split(\"\\n\")\nlet noOfLines = lines.length\nlet recentStatus = lines[noOfLines - 1].toString().substring(29,)\nrecentStatus = JSON.parse(recentStatus)\nlet currentStat = recentStatus.StatusSTS.POWER\n\nif (currentStat !== previousState) {\n    context.set('previousState', currentStat)\n    msg.payload = JSON.stringify(currentStat)  \n    return msg;\n}\n\nelse if (currentStat === previousState) {\n    return null\n}",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1500,
+        "y": 1920,
+        "wires": [
+            [
+                "016e141ed19d5d0a",
+                "fc20917a0b9abd82"
+            ]
+        ]
+    },
+    {
+        "id": "6c08fc928c3c354f",
+        "type": "exec",
+        "z": "47b145e42d0b71fd",
+        "command": "node /home/pi/Documents/Home_Energy_System/set_battery.js",
+        "addpay": "",
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "change battery %?",
+        "x": 430,
+        "y": 400,
+        "wires": [
+            [
+                "e20b060b497b056a"
+            ],
+            [
+                "6caa05cef148cb1e"
+            ],
+            [
+                "f3c5408db24ecbf2"
+            ]
+        ]
+    },
+    {
+        "id": "e20b060b497b056a",
+        "type": "debug",
+        "z": "47b145e42d0b71fd",
+        "name": "stdout %",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 620,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "6caa05cef148cb1e",
+        "type": "debug",
+        "z": "47b145e42d0b71fd",
+        "name": "stderr %",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 620,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "f3c5408db24ecbf2",
+        "type": "debug",
+        "z": "47b145e42d0b71fd",
+        "name": "code %",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 620,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "6b7933668b142f02",
+        "type": "delay",
+        "z": "47b145e42d0b71fd",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "120",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 1170,
+        "y": 1860,
+        "wires": [
+            [
+                "2842c25dd80446e8"
+            ]
+        ]
+    },
+    {
+        "id": "4c12897ab09b3b20",
+        "type": "file",
+        "z": "47b145e42d0b71fd",
+        "name": "write status 11",
+        "filename": "/home/pi/Documents/Home_Energy_System/data_skripsie_nodered/sonoff_status_11.json",
+        "filenameType": "str",
+        "appendNewline": true,
+        "createDir": true,
+        "overwriteFile": "false",
+        "encoding": "utf8",
+        "x": 1100,
+        "y": 1240,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "7e9c539132840cb7",
+        "type": "function",
+        "z": "47b145e42d0b71fd",
+        "name": "status function",
+        "func": "let current = msg.payload\nlet previousState = context.get('previousState') || null;\n\nlet lines = current.split(\"\\n\")\nlet noOfLines = lines.length\nlet recentStatus = lines[noOfLines - 1].toString().substring(29,)\nrecentStatus = JSON.parse(recentStatus)\nlet currentStat = recentStatus.StatusSTS\n\nmsg.payload = JSON.stringify(currentStat)  \nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1080,
+        "y": 1280,
+        "wires": [
+            [
+                "4c12897ab09b3b20",
+                "999ad84ad2796030"
+            ]
+        ]
+    },
+    {
+        "id": "999ad84ad2796030",
+        "type": "debug",
+        "z": "47b145e42d0b71fd",
+        "name": "debug status 11",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1080,
+        "y": 1300,
+        "wires": []
+    },
+    {
+        "id": "c3b61bd330293f47",
+        "type": "exec",
+        "z": "47b145e42d0b71fd",
+        "command": "node /home/pi/Documents/Home_Energy_System/sonoff_load_sim.js",
+        "addpay": "",
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "load simulation",
+        "x": 420,
+        "y": 260,
+        "wires": [
+            [
+                "d89db5c4b9f36626"
+            ],
+            [
+                "431c8eb87b01c0f5"
+            ],
+            [
+                "dd08c7aec082785b"
+            ]
+        ]
+    },
+    {
+        "id": "e60750548a9fee2d",
+        "type": "inject",
+        "z": "47b145e42d0b71fd",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "current",
+                "v": "",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "0 7-16 * * *",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 230,
+        "y": 260,
+        "wires": [
+            [
+                "c3b61bd330293f47"
+            ]
+        ]
+    },
+    {
+        "id": "d89db5c4b9f36626",
+        "type": "debug",
+        "z": "47b145e42d0b71fd",
+        "name": "stdout load",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 630,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "431c8eb87b01c0f5",
+        "type": "debug",
+        "z": "47b145e42d0b71fd",
+        "name": "stderr load",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 630,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "c4d322a1f1b18878",
+        "type": "file",
+        "z": "47b145e42d0b71fd",
+        "name": "state file",
+        "filename": "/home/pi/Documents/Home_Energy_System/data_skripsie_nodered/sonoff_status.txt",
+        "filenameType": "str",
+        "appendNewline": false,
+        "createDir": false,
+        "overwriteFile": "true",
+        "encoding": "setbymsg",
+        "x": 1600,
+        "y": 1340,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "b9d9e8bf8416724c",
+        "type": "debug",
+        "z": "47b145e42d0b71fd",
+        "name": "debug fxn",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1600,
+        "y": 1280,
+        "wires": []
+    },
+    {
+        "id": "80e301e1c296c924",
+        "type": "function",
+        "z": "47b145e42d0b71fd",
+        "name": "switch function",
+        "func": "let output = msg.payload\nlet currentState = output\n// let currentState = output.trim()\nlet previousState = context.get('previousState') || null;\npreviousState = JSON.parse(previousState)\n\n// let lines = current.split(\"\\n\")\n// let noOfLines = lines.length\n// let recentStatus = lines[noOfLines - 1].toString().substring(29,)\n// recentStatus = JSON.parse(recentStatus)\n// let currentStat = recentStatus.StatusSTS.POWER\n\nif(currentState == 'ON' || currentState == 'OFF' || currentState === null) {\n    if (currentState !== previousState) {\n        context.set('previousState', currentState);\n        msg.payload = JSON.parse(currentState);\n        return msg;\n    }\n\n    else if (currentState === previousState) {\n        return null\n    }\n}\nelse {\n    currentState = 'Switch state currently unavaliable'\n    previousState = 'Switch state currently unavaliable'\n    if (currentState !== previousState) {\n        msg.payload = 'Switch state currently unavaliable'\n        return msg\n    }\n}\n\n// let output = msg.payload\n// output = JSON.parse(output)\n\n// msg.payload = output\n\n// return msg",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1420,
+        "y": 1340,
+        "wires": [
+            [
+                "b9d9e8bf8416724c",
+                "c4d322a1f1b18878"
+            ]
+        ]
+    },
+    {
+        "id": "dd08c7aec082785b",
+        "type": "debug",
+        "z": "47b145e42d0b71fd",
+        "name": "return load",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 630,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "1ce8c709eb1d655d",
+        "type": "file in",
+        "z": "47b145e42d0b71fd",
+        "name": "inverter data",
+        "filename": "/home/pi/Documents/Home_Energy_System/data_skripsie_nodered/one_day_inverter_data.json",
+        "filenameType": "str",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 1030,
+        "y": 700,
+        "wires": [
+            [
+                "f0c21b32a68543a0"
+            ]
+        ]
+    },
+    {
+        "id": "ac0d117712c21d1c",
+        "type": "inject",
+        "z": "47b145e42d0b71fd",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "660",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 870,
+        "y": 700,
+        "wires": [
+            [
+                "1ce8c709eb1d655d"
+            ]
+        ]
+    },
+    {
+        "id": "f0c21b32a68543a0",
+        "type": "function",
+        "z": "47b145e42d0b71fd",
+        "name": "current %",
+        "func": "let data = msg.payload;\n\ndata = JSON.parse(data)\n\nlet firstRecord = data.day_7_page_1.record[0];\n\n\nlet batteryEnergy = 'batteryEnergy(%)/184'\nmsg.payload = firstRecord['batteryEnergy(%)/184']\n// let batteryEnergy = firstRecord[\"batteryEnergy(%)/184\"];\n\n// // Set the extracted value as the new payload\n// msg.payload = parseInt(batteryEnergy)\n\n// msg.payload = battEnergyArr\n// msg.payload = batteryEnergy\n// msg = output.day_0_page_1.record.\"batteryEnergy(%)/184\"\n// let soc = \n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1180,
+        "y": 700,
+        "wires": [
+            [
+                "5c921d976144d23c",
+                "bdb2a975fdda2b05"
+            ]
+        ]
+    },
+    {
+        "id": "5c921d976144d23c",
+        "type": "debug",
+        "z": "47b145e42d0b71fd",
+        "name": "current",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1300,
+        "y": 740,
+        "wires": []
+    },
+    {
+        "id": "bdb2a975fdda2b05",
+        "type": "file",
+        "z": "47b145e42d0b71fd",
+        "name": "write %",
+        "filename": "/home/pi/Documents/Home_Energy_System/data_skripsie_nodered/battery_percent_current.json",
+        "filenameType": "str",
+        "appendNewline": true,
+        "createDir": true,
+        "overwriteFile": "true",
+        "encoding": "none",
+        "x": 1320,
+        "y": 700,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "2842c25dd80446e8",
+        "type": "delay",
+        "z": "47b145e42d0b71fd",
+        "d": true,
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "45",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 1140,
+        "y": 1960,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "470316202e66c1b6",
+        "type": "exec",
+        "z": "47b145e42d0b71fd",
+        "command": "node /home/pi/Documents/Home_Energy_System/sonoff_state.js",
+        "addpay": "",
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "get sonoff state",
+        "x": 980,
+        "y": 140,
+        "wires": [
+            [
+                "a501a99ebccb586f",
+                "0439f63265d4f6ea"
+            ],
+            [
+                "1de7484ce68665b6"
+            ],
+            [
+                "221e85f6b563b152"
+            ]
+        ]
+    },
+    {
+        "id": "9e1688ecea32fcf2",
+        "type": "inject",
+        "z": "47b145e42d0b71fd",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "current",
+                "v": "",
+                "vt": "str"
+            }
+        ],
+        "repeat": "3",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 810,
+        "y": 140,
+        "wires": [
+            [
+                "470316202e66c1b6"
+            ]
+        ]
+    },
+    {
+        "id": "a501a99ebccb586f",
+        "type": "debug",
+        "z": "47b145e42d0b71fd",
+        "name": "stdout state",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1250,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "1de7484ce68665b6",
+        "type": "debug",
+        "z": "47b145e42d0b71fd",
+        "name": "stderr state",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1250,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "d9349ee958113142",
+        "type": "file",
+        "z": "47b145e42d0b71fd",
+        "name": "state file",
+        "filename": "/home/pi/Documents/Home_Energy_System/data_skripsie_nodered/sonoff_node.json",
+        "filenameType": "str",
+        "appendNewline": false,
+        "createDir": false,
+        "overwriteFile": "true",
+        "encoding": "setbymsg",
+        "x": 1360,
+        "y": 1360,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "1b9e69dac6450a59",
+        "type": "debug",
+        "z": "47b145e42d0b71fd",
+        "name": "debug fxn",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1840,
+        "y": 1320,
+        "wires": []
+    },
+    {
+        "id": "7de6ce7604d0f419",
+        "type": "function",
+        "z": "47b145e42d0b71fd",
+        "name": "extract state",
+        "func": "let output = msg.payload\n// let currentState = output\nlet currentState = output.trim()\nlet previousState = context.get('previousState') || null;\n// previousState = JSON.parse(previousState)\n\n// let lines = current.split(\"\\n\")\n// let noOfLines = lines.length\n// let recentStatus = lines[noOfLines - 1].toString().substring(29,)\n// recentStatus = JSON.parse(recentStatus)\n// let currentStat = recentStatus.StatusSTS.POWER\n\nif(currentState === 'ON' || currentState === 'OFF' || currentState === null) {\n    if (currentState !== previousState) {\n        context.set('previousState', currentState);\n        msg.payload = {'state': currentState}\n        return msg;\n    }\n    else if (currentState === previousState) {\n        return null\n    }\n}\nelse {\n    // currentState = 'Switch state currently unavaliable'\n    // // previousState = 'Switch state currently unavaliable'\n    // if (currentState !== previousState) {\n    //     msg.payload = {'state': currentState}\n    //     return msg\n    // }\n    // else {\n        return null\n    // }\n}\n\n// let output = msg.payload\n// output = JSON.parse(output)\n\n// msg.payload = output\n\n// return msg",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1910,
+        "y": 1240,
+        "wires": [
+            [
+                "1b9e69dac6450a59"
+            ]
+        ]
+    },
+    {
+        "id": "221e85f6b563b152",
+        "type": "debug",
+        "z": "47b145e42d0b71fd",
+        "name": "return state",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1250,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "7786cc7b667bef65",
+        "type": "http request",
+        "z": "47b145e42d0b71fd",
+        "name": "weather - historical",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/cape%20town/last7days?unitGroup=metric&elements=datetime%2CdatetimeEpoch%2Csolarradiation%2Csolarenergy&include=fcst%2Cdays%2Chours%2Cstatsfcst%2Cobs%2Cstats%2Cremote&key=YOUR_API_TOKEN&contentType=json",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 1070,
+        "y": 400,
+        "wires": [
+            [
+                "23ae953f650407e9",
+                "4406de2d51b86847"
+            ]
+        ]
+    },
+    {
+        "id": "23ae953f650407e9",
+        "type": "debug",
+        "z": "47b145e42d0b71fd",
+        "name": "historical",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1300,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "4406de2d51b86847",
+        "type": "file",
+        "z": "47b145e42d0b71fd",
+        "name": "historical",
+        "filename": "/home/pi/Documents/Home_Energy_System/data_skripsie_nodered/weather_data_historical.json",
+        "filenameType": "str",
+        "appendNewline": true,
+        "createDir": false,
+        "overwriteFile": "true",
+        "encoding": "none",
+        "x": 1300,
+        "y": 400,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "0676ffc3507b4e90",
+        "type": "inject",
+        "z": "47b145e42d0b71fd",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "url",
+                "v": "",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "01 00 * * *",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 870,
+        "y": 400,
+        "wires": [
+            [
+                "7786cc7b667bef65"
+            ]
+        ]
+    },
+    {
+        "id": "8005ccc63bcac175",
+        "type": "http request",
+        "z": "47b145e42d0b71fd",
+        "name": "weather - visual crossing",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "body",
+        "url": "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/Cape%20Town/next7days?unitGroup=metric&elements=datetime%2CdatetimeEpoch%2Ctemp%2Cwindspeed%2Ccloudcover%2Csolarradiation%2Csolarenergy%2Cconditions%2Cdescription&include=hours%2Cdays&key=YOUR_API_TOKEN&contentType=json",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 1090,
+        "y": 300,
+        "wires": [
+            [
+                "1b7c8598ac3597b8",
+                "b734c80a0ff3bf3e"
+            ]
+        ]
+    },
+    {
+        "id": "1b7c8598ac3597b8",
+        "type": "debug",
+        "z": "47b145e42d0b71fd",
+        "name": "weather",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1300,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "1c60e99754b304b3",
+        "type": "inject",
+        "z": "47b145e42d0b71fd",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "url",
+                "v": "",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "01 00 * * *",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 870,
+        "y": 300,
+        "wires": [
+            [
+                "8005ccc63bcac175"
+            ]
+        ]
+    },
+    {
+        "id": "b734c80a0ff3bf3e",
+        "type": "file",
+        "z": "47b145e42d0b71fd",
+        "name": "weather data",
+        "filename": "/home/pi/Documents/Home_Energy_System/data_skripsie_nodered/weather_data.json",
+        "filenameType": "str",
+        "appendNewline": true,
+        "createDir": false,
+        "overwriteFile": "true",
+        "encoding": "none",
+        "x": 1310,
+        "y": 300,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "35fae886ac0a025c",
+        "type": "exec",
+        "z": "47b145e42d0b71fd",
+        "d": true,
+        "command": "node /home/pi/Documents/Home_Energy_System/sonoff_off.js",
+        "addpay": "",
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "sonoff on",
+        "x": 1320,
+        "y": 1480,
+        "wires": [
+            [
+                "49aca73fa58c7567"
+            ],
+            [
+                "9541d637107baa89"
+            ],
+            [
+                "4a22eeb4d988cffd"
+            ]
+        ]
+    },
+    {
+        "id": "d1ac6b169e5f810a",
+        "type": "inject",
+        "z": "47b145e42d0b71fd",
+        "d": true,
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "current",
+                "v": "",
+                "vt": "str"
+            }
+        ],
+        "repeat": "3",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 1150,
+        "y": 1480,
+        "wires": [
+            [
+                "35fae886ac0a025c"
+            ]
+        ]
+    },
+    {
+        "id": "49aca73fa58c7567",
+        "type": "debug",
+        "z": "47b145e42d0b71fd",
+        "name": "stdout",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1490,
+        "y": 1640,
+        "wires": []
+    },
+    {
+        "id": "9541d637107baa89",
+        "type": "debug",
+        "z": "47b145e42d0b71fd",
+        "name": "stderr",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1490,
+        "y": 1520,
+        "wires": []
+    },
+    {
+        "id": "10f2ab22ef2a7eb0",
+        "type": "file",
+        "z": "47b145e42d0b71fd",
+        "name": "state file",
+        "filename": "/home/pi/Documents/Home_Energy_System/data_skripsie_nodered/sonoff_node.json",
+        "filenameType": "str",
+        "appendNewline": false,
+        "createDir": false,
+        "overwriteFile": "true",
+        "encoding": "setbymsg",
+        "x": 1080,
+        "y": 200,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "eda172b6f6f4192d",
+        "type": "debug",
+        "z": "47b145e42d0b71fd",
+        "name": "debug fxn",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1080,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "0439f63265d4f6ea",
+        "type": "function",
+        "z": "47b145e42d0b71fd",
+        "name": "switch function",
+        "func": "let output = msg.payload\nlet currentState = output.trim()\nlet previousState = context.get('previousState') || null;\n\nif(currentState == 'ON' || currentState == 'OFF' || currentState === null) {\n    if (currentState !== previousState) {\n        context.set('previousState', currentState);\n        // currentState = JSON.parse(currentState);\n        msg.payload = { \"state\": currentState }\n        return msg;\n    }\n\n    else if (currentState === previousState) {\n        return null\n    }\n}\nelse {\n    currentState = 'Switch state currently unavaliable'\n    previousState = 'Switch state currently unavaliable'\n    if (currentState !== previousState) {\n        msg.payload = 'Switch state currently unavaliable'\n        return msg\n    }\n}",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 880,
+        "y": 220,
+        "wires": [
+            [
+                "eda172b6f6f4192d",
+                "10f2ab22ef2a7eb0"
+            ]
+        ]
+    },
+    {
+        "id": "4a22eeb4d988cffd",
+        "type": "debug",
+        "z": "47b145e42d0b71fd",
+        "name": "return",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1490,
+        "y": 1560,
+        "wires": []
+    },
+    {
+        "id": "45a654b2c1f39836",
+        "type": "inject",
+        "z": "47b145e42d0b71fd",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "current",
+                "v": "",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "0 0-22 * * *",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 230,
+        "y": 400,
+        "wires": [
+            [
+                "6c08fc928c3c354f"
+            ]
+        ]
+    },
+    {
+        "id": "3e5abc224d01a922",
+        "type": "delay",
+        "z": "47b145e42d0b71fd",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "60",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 280,
+        "y": 660,
+        "wires": [
+            [
+                "c34b4c06bd6346e0"
+            ]
+        ]
+    }
+]

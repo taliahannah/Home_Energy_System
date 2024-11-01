@@ -1,0 +1,137 @@
+html, body {
+    /*height: 100%;
+    width: 100%;*/
+    background-color: rgb(56, 175, 230);
+    /* background-color: rgba(75, 180, 230, 1); */
+    font-family: Arial, Helvetica, sans-serif;
+    /* overflow: hidden; */
+}
+
+.displayWeather{
+    display: flex;
+    justify-content: space-between; 
+    align-items: center;
+    width: 60%; /* for two graphs next to each other: width: 90% */
+    max-width: 60%; /* for two graphs next to each other: max-width: 90% */
+    min-height: 400px;
+    /* margin-top: -45px; */
+    /* overflow: hidden; */
+}
+
+.displayWeatherDebug{
+    display: flex;
+    justify-content: space-between; 
+    align-items: center;
+    width: 100%; /* for two graphs next to each other: width: 90% */
+    max-width: 100%; /* for two graphs next to each other: max-width: 90% */
+    min-height: 400px;
+    /* margin-top: -45px; */
+    /* overflow: hidden; */
+    /* border-right: 200px; */
+    margin-right: 200px;
+    border: 5px;
+
+}
+
+/* TODO make for three graphs across? */
+canvas {
+    width: 52% !important;
+    height: auto !important;
+    border: 5px;
+    /* background-color: whitesmoke; */
+    background-color: white;
+    box-shadow: 0 6px 6px rgba(0, 0, 0, 0.2);
+    margin: 1.5% 1.7%;
+    border-radius: 3px;
+}
+
+h2 {
+    text-align: center;
+}
+
+#title {
+    text-align: center;
+}
+
+.subHeading {
+    text-align: center;
+}
+
+.chartContainer {
+    display: flex;
+    justify-content: space-between; 
+    align-items: center;
+    width: 60%; /* for two graphs next to each other: width: 90% */
+    max-width: 60%; /* for two graphs next to each other: max-width: 90% */
+    min-height: 400px;
+    /* margin-top: -70px; */
+    /* margin-bottom: -20px; */
+    /* overflow: hidden; */
+}
+
+.loadsheddingSonoffContainer {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+    width: 90%;
+    margin: 0 auto;
+}
+
+.boxLsSonoff {
+    background-color: white;
+    border-radius: 4px;
+    box-shadow: 0 6px 6px rgba(0, 0, 0, 0.2);
+    padding: 3px;
+    width: 100%;
+    text-align: center;
+    height: 117px;
+}
+
+.boxBattery {
+    margin-top: 20px;
+    /* padding: 10px; */
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.leftColumn {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 45%; 
+}
+
+.leftColumn .boxLsSonoff:not(:last-child) {
+    margin-bottom: 20px; /* Adds space between the two stacked boxes */
+}
+
+.fullHeight {
+    width: 50%; 
+    height: 260px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#loadsheddingCurrent {
+    margin-top: 0;
+    /* margin: 2px 20px;  */
+}
+
+.loadshedding {
+    margin-bottom: 4px;
+}
+
+#description {
+    text-align: center;
+}
+
+mark {
+    background-color: rgb(255, 232, 101);
+    /* background-color: rgba(255, 191, 0, 1) */
+    color: black;
+  }
+
+/* let yellowFill = 'rgba(255, 191, 0, 0.2)' */
