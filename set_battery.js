@@ -184,10 +184,10 @@ function getCurrentPercentage(batteryFore, currentStage, lsLength) {
             let tempB = 0
 
             if(lsLength == 4.5) {
-                currentBattery = four_hour[hour/2]
+                currentBattery = four_hour[hour/2] + currentBattery
             }
             else if(lsLength == 6.5) {
-                currentBattery = six_hour[hour/2]
+                currentBattery = six_hour[hour/2] + currentBattery
             }
             else{
                 currentBattery = currentBattery + 12
