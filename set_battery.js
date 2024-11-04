@@ -195,7 +195,7 @@ function getCurrentPercentage(batteryFore, currentStage, lsLength) {
 
             for(let i = 0; i < 80; i++) {
                 tempB += parseFloat(batteryFore[`b_${i}`])
-                batteryForeMin[i] = (-1 * tempB) + 10
+                batteryForeMin[i] = (-1 * tempB) + 12
             }
             
             
