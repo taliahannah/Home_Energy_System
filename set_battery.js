@@ -189,11 +189,16 @@ function getCurrentPercentage(batteryFore, currentStage, lsLength) {
             else if(lsLength == 6.5) {
                 currentBattery = six_hour[hour/2]
             }
+            else{
+                currentBattery = currentBattery + 12
+            }
 
             for(let i = 0; i < 80; i++) {
                 tempB += parseFloat(batteryFore[`b_${i}`])
                 batteryForeMin[i] = (-1 * tempB) + 10
             }
+            
+            
 
             tempB = 0
 
